@@ -2,33 +2,33 @@
 struct cell;
 
 // Указатель для пользователя на структуру ряда из ячеек
-typedef struct cell * cell;
+typedef struct cell * cell_t;
 
 // при неудаче возвращаем ошибку(иначе 0), везде даже в инициализации
 //
 // Создаём ячейку
-cell init_cell(void);
+cell_t init_cell(void);
 
 // Ставим флаг
-int up_flag_cell(cell cl);
+void up_flag_cell(cell_t cell);
 
 // Убираем флаг
-int down_flag_cell(cell cl);
+void down_flag_cell(cell_t cell);
 
 // Возвращаем есть ли флаг
-int is_flag_cell(cell cl);
+bool is_flag_cell(cell_t cell);
 
 // Устанавливаем мину
-int up_min_cell(cell cl);
+void up_min_cell(cell_t cell);
 
 // Возвращаем есть ли на данной ячейке бомба
-int is_min_cell(cell cl);
+bool is_min_cell(cell_t cell);
 
 // Записываем сколько мин вокруг
-int set_min_near_cell(cell cl);
+void set_min_near_cell(cell_t cell);
 
 // Получаем сколько мин вокруг
-int get_min_near_cell(cell cl);
+int get_min_near_cell(cell_t cell);
 
 // Освобождаем ресурсы
-int destroy_cell(cell cl);
+void destroy_cell(cell_t cell);

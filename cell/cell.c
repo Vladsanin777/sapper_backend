@@ -15,41 +15,41 @@ cell init_cell(void) {
 }
 
 // Ставим флаг
-int up_flag_cell(cell cl) {
+void up_flag_cell(cell_t cell) {
     /* TODO */
 }
 
 // Убираем флаг
-int down_flag_cell(cell cl) {
+void down_flag_cell(cell_t cell) {
     /* TODO */
 }
 
 // Возвращаем есть ли флаг
-int is_flag_cell(cell cl) {
+bool is_flag_cell(cell_t cell) {
     /* TODO */
 }
 
 // Устанавливаем мину
-int up_min_cell(cell cl) {
+void up_min_cell(cell_t cell) {
     /* TODO */
 }
 
 // Возвращаем есть ли на данной ячейке бомба
-int is_min_cell(cell cl) {
+bool is_min_cell(cell_t cell) {
     /* TODO */
 }
 
 // Записываем сколько мин вокруг
-int set_min_near_cell(cell cl) {
+void set_min_near_cell(cell_t cell) {
     /* TODO */
 }
 
 // Получаем сколько мин вокруг
-int get_min_near_cell(cell cl) {
+int get_min_near_cell(cell_t cell) {
     /* TODO */
 }
 
 // Освобождаем ресурсы
-int destroy_cell(cell cl) {
+void destroy_cell(cell_t cell) {
     /* TODO */
 }
