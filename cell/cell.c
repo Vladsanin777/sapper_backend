@@ -40,7 +40,7 @@ bool is_min_cell(cell_t cell) {
 }
 
 // Записываем сколько мин вокруг
-void set_min_near_cell(cell_t cell) {
+void set_min_near_cell(cell_t cell, int count_min) {
     /* TODO */
 }
 
