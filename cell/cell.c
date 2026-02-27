@@ -1,4 +1,5 @@
 #include "cell/cell.h"
+#include <stdlib.h>
 
 // структура ячейки
 struct cell {
@@ -25,8 +26,7 @@ void up_flag_cell(cell_t cell) {
 
 // Убираем флаг
 void down_flag_cell(cell_t cell) {
-
-    (*cell).m_is_flag = true;
+    (*cell).m_is_flag = false;
 }
 
 // Возвращаем есть ли флаг

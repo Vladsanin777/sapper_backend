@@ -7,7 +7,7 @@ typedef struct row * row_t;
 // при неудаче возвращаем ошибку(иначе 0), везде даже в инициализации
 //
 // Создаём строку, с переданным количеством ячеек
-row_t init_row(const int count_cells);
+row_t init_row(const int count_cells, const int count_min);
 
 // Ставим флаг на ячейку с переданным индексом
 void up_flag_cell_row(row_t row, const int index_cell);

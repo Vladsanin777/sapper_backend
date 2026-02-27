@@ -1,16 +1,29 @@
-TARGETS := cell/cell row/row mins_field/mins_field
+TARGETS_LIB := cell/cell #row/row mins_field/mins_field
 
-OBJS := cell/cell.o row/row.o mins_field/mins_field.o
+OBJS_LIB := cell/cell.o row/row.o mins_field/mins_field.o
 
-cell/cell: cell/cell.o
+TARGETS_TESTS := test_cell_1
 
-row/row: row/row.o
+OBJS_TESTS := test/cell/test1.o
 
-mins_field/mins_field: mins_field/mins_field.o
+TARGETS := $(TARGETS_LIB) $(TARGETS_TESTS)
+
+OBJS := $(OBJS_LIB) $(OBJS_TESTS)
+
+CFLAGS := -I./ -fsanitize=address
+
+librery.a: $(OBJS_LIB)
+	$(AR) rcs librery.a $(OBJS_LIB)
+
+test/cell/test1: test/cell/test1.o
+	$(CC) $(CFLAGS) $< librery.a -o $@
+
+test_cell_1: librery.a test/cell/test1 
 
 all: $(TARGETS)
 
 clean: 
 	rm -f $(OBJS) $(TARGETS)
+
 
 .PHONY: clean all

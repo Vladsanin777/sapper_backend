@@ -1,3 +1,4 @@
 export CFLAGS="-Wall -Wextra"
 
-make
+make clean
+make test_cell_1
