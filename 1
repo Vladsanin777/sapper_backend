@@ -1,0 +1,67 @@
+#include <stdio.h>
+
+int main(void) {
+    /*
+    int num1 = 0;
+    int num2 = 0;
+    int * ptr = &num1;
+    int * ptr1 = &num2;
+    int num3 = 0;
+    *((short*)ptr + 1) = 0x1934;
+    short *ptr3 = (short*)&num3;
+    *(ptr3+1)= 0x1934;
+    printf("0x%08x\n", *((int *)(ptr3)));
+    */
+
+
+
+
+    int num4 = 0x3;
+    int num5 = 0xA;
+    int * ptr4 = &num4;
+    int ** ptr5 = &ptr4;
+    int *** ptr6 = &ptr5;
+    int **** ptr7 = &ptr6;
+    ptr4=&num5;
+    int **ptr = &ptr4;
+    int ***ptr_1=&ptr;
+    ptr7=&ptr_1;
+    
+    printf("%x\n",****ptr7);
+    printf("addr num4: %p\n", &num4);
+    printf("addr ptr4: %p\n", &ptr4);
+    printf("addr ptr5: %p\n", &ptr5);
+
+    printf("num4: %x\n", num4);
+    printf("ptr4: %p\n", ptr4);
+    printf("ptr5: %p\n", ptr5);
+
+    printf("value ptr4: %x\n", *ptr4);
+    printf("value ptr5: %p\n", *ptr5);
+
+    printf("value value ptr5: %x\n", **ptr5);
+
+    /*
+    printf("%ld, %ld\n", sizeof(num2), sizeof(num3));
+
+    printf("%hhu, %hhu, %hhu, %hhu\n", *(char *)ptr1, 
+            *((char *)ptr1 + 1), *((char *)ptr + 2), *((char *)ptr + 3));
+
+    printf("%u\n", -1);
+    printf("%d\n", -1);
+
+
+
+    int * ptr2 = &num2;
+    ptr2 = &num2;
+    ptr2 = &num1;
+    ptr2 = &num2;
+
+    *ptr2 = 9;
+
+
+
+    return 0;
+    */
+    return 0;
+}
