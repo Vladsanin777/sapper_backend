@@ -25,7 +25,6 @@ void up_flag_cell(cell_t cell) {
 
 // Убираем флаг
 void down_flag_cell(cell_t cell) {
-
     (*cell).m_is_flag = true;
 }
 
