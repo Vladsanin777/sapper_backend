@@ -44,13 +44,13 @@ bool is_min_cell(cell_t cell) {
 }
 
 // Записываем сколько мин вокруг
-void set_min_near_cell(cell_t cell, int count_min) {
+void set_min_near_cell(cell_t cell, unsigned char count_min) {
     if (count_min <= 8)
         (*cell).m_mins_near = count_min;
 }
 
 // Получаем сколько мин вокруг
-int get_min_near_cell(cell_t cell) {
+unsigned char get_min_near_cell(cell_t cell) {
     return (*cell).m_mins_near;
 }
 

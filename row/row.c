@@ -19,7 +19,7 @@ void add_mines_row(row_t row, const size_t count_mines);
 // Создаём строку, с переданным количеством ячеек
 row_t init_row(const size_t count_cells, const size_t count_mines) {
     row_t row = calloc(sizeof(*row),1);
-    row->m_cells = calloc(sizeof(*row->m_cells),count_cells);
+    row->m_cells = calloc(sizeof(*row->m_cells), count_cells);
     (*row).m_count_cells = count_cells;
     add_mines_row(row,count_mines);
     return row;
@@ -52,35 +52,58 @@ void add_mines_row(row_t row, const size_t count_mines) {
 
 // Ставим флаг на ячейку с переданным индексом
 void up_flag_cell_row(row_t row, const size_t index_cell) {
-    if (index_cell<(*row).m_count_cells)
-        (*row).m_cells = index_cell;
-    up_flag_cell(row->m_cells[index_cell]);
+    if (index_cell < (*row).m_count_cells)
+        up_flag_cell(row->m_cells[index_cell]);
 }
 
 // Убираем флаг на ячейку с переданным индексом
 void down_flag_cell_row(row_t row, const size_t index_cell) {
-    /* TODO */
+    if (index_cell < (*row).m_count_cells)
+        down_flag_cell(row->m_cells[index_cell]);
 }
 
 // Является ли ячейка с индексом миной
 bool is_min_cell_row(row_t row, const size_t index_cell) {
-    /* TODO */
+    if (index_cell < (*row).m_count_cells)
+        return is_min_cell(row->m_cells[index_cell]);
 }
 
 // Стоит ли флаг на ячейке с переданным индексом
 bool is_flag_cell_row(row_t row, const size_t index_cell) {
-    /* TODO */
+    if (index_cell < (*row).m_count_cells)
+        return is_flag_cell(row->m_cells[index_cell]);
 }
 
 // Возврашаем количество мин в окружающих ячейках
-size_t get_count_mines_near_cell_row(row_t row, const size_t index_cell) {
-    /* TODO */
+unsigned char get_count_mines_near_cell_row(row_t row, const size_t index_cell) {
+    if (index_cell < (*row).m_count_cells)
+        return get_min_near_cell(row->m_cells[index_cell]);
 }
 
 // Записываем в ячейку сколько мин в ней плюс окружающих клетках
 void set_count_mines_near_cell_row(row_t top /* Верх */, \
         row_t central /* Центер */, row_t bottom /* Низ */, const size_t index_cell) {
-    /* TODO */
+    unsigned char count_min = 0;
+
+    if (central == NULL)
+        return;
+
+    if (top != NULL && index_cell < top->m_count_cells) {
+        if (index_cell != 0)
+            count_min += is_min_cell(top->m_cells[index_cell - 1]);
+        count_min += is_min_cell(top->m_cells[index_cell]);
+        if (index_cell + 1 < top->m_count_cells)
+            count_min += is_min_cell(top->m_cells[index_cell + 1]);
+    }
+    count_min += is_min_cell(central->m_cells[index_cell - 1]);
+    count_min += is_min_cell(central->m_cells[index_cell + 1]);
+    if (top != NULL) {
+        count_min += is_min_cell(bottom->m_cells[index_cell - 1]);
+        count_min += is_min_cell(bottom->m_cells[index_cell]);
+        count_min += is_min_cell(bottom->m_cells[index_cell + 1]);
+    }
+    set_min_near_cell(central->m_cells[index_cell], count_min);
+
 }
 
 // Освобождаем ресурсы
