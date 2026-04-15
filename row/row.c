@@ -19,8 +19,11 @@ void add_mines_row(row_t row, const size_t count_mines);
 // Создаём строку, с переданным количеством ячеек
 row_t init_row(const size_t count_cells, const size_t count_mines) {
     row_t row = calloc(sizeof(*row),1);
+    size_t index_cell = 0;
     row->m_cells = calloc(sizeof(*row->m_cells), count_cells);
     (*row).m_count_cells = count_cells;
+    for(index_cell = 0;index_cell<count_cells;index_cell++)
+        row->m_cells[index_cell] = init_cell();
     add_mines_row(row,count_mines);
     return row;
 }
@@ -85,7 +88,7 @@ void set_count_mines_near_cell_row(row_t top /* Верх */, \
         row_t central /* Центер */, row_t bottom /* Низ */, const size_t index_cell) {
     unsigned char count_min = 0;
 
-    if (central == NULL)
+    if (central == NULL && index_cell < central->m_count_cells)
         return;
 
     if (top != NULL && index_cell < top->m_count_cells) {
@@ -95,18 +98,24 @@ void set_count_mines_near_cell_row(row_t top /* Верх */, \
         if (index_cell + 1 < top->m_count_cells)
             count_min += is_min_cell(top->m_cells[index_cell + 1]);
     }
-    count_min += is_min_cell(central->m_cells[index_cell - 1]);
-    count_min += is_min_cell(central->m_cells[index_cell + 1]);
-    if (top != NULL) {
-        count_min += is_min_cell(bottom->m_cells[index_cell - 1]);
+    if (index_cell != 0)
+        count_min += is_min_cell(central->m_cells[index_cell - 1]);
+    if (index_cell + 1 < central->m_count_cells)
+        count_min += is_min_cell(central->m_cells[index_cell + 1]);
+    if (bottom != NULL && index_cell < bottom->m_count_cells) {
+        if (index_cell != 0)
+            count_min += is_min_cell(bottom->m_cells[index_cell - 1]);
         count_min += is_min_cell(bottom->m_cells[index_cell]);
-        count_min += is_min_cell(bottom->m_cells[index_cell + 1]);
+        if (index_cell + 1 < bottom->m_count_cells)
+            count_min += is_min_cell(bottom->m_cells[index_cell + 1]);
     }
     set_min_near_cell(central->m_cells[index_cell], count_min);
-
 }
 
 // Освобождаем ресурсы
 void destroy(row_t row) {
-    /* TODO */
+    for(index_cell = 0;index_cell<count_cells;index_cell++)
+        destroy_cell(row->m_cells[index_cell]);
+    free(row->m_cells);
+    free(row);
 }
