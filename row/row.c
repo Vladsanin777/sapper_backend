@@ -1,5 +1,7 @@
 #include "row/row.h"
 #include "cell/cell.h"
+#include <stdlib.h>
+#include <stdint.h>
 
 
 // структура строки
@@ -103,6 +105,17 @@ bool is_flag_cell_row(row_t row, const size_t index_cell) {
     return false;
 }
 
+void open_cell_row(row_t row , const size_t index_cell) {
+    if (row != NULL && row->m_cells != NULL && index_cell < (*row).m_count_cells)
+        open_cell(row->m_cells[index_cell]);
+}
+
+bool is_open_cell_row(row_t row ,const size_t index_cell) {
+    if (row != NULL && row->m_cells != NULL && index_cell < (*row).m_count_cells)
+        return is_open_cell(row->m_cells[index_cell]);
+    return false;
+}
+
 // Возврашаем количество мин в окружающих ячейках
 unsigned char get_count_mines_near_cell_row(row_t row, const size_t index_cell) {
     if (row != NULL && row->m_cells != NULL && index_cell < (*row).m_count_cells)
@@ -141,7 +154,7 @@ void set_count_mines_near_cell_row(row_t top /* Верх */, \
 
 // Освобождаем ресурсы
 void destroy_row(row_t row) {
-    size_t init_cell = 0;
+    size_t index_cell = 0;
     if (row != NULL) {
         for(index_cell = 0;index_cell<row->m_count_cells;index_cell++)
             destroy_cell(row->m_cells[index_cell]);

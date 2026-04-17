@@ -1,10 +1,12 @@
 #include "cell/cell.h"
+#include <stdlib.h>
 
 // структура ячейки
 struct cell {
     unsigned char m_mins_near;
     bool m_is_min : 1;
     bool m_is_flag : 1;
+    bool m_is_open : 1;
 };
 
 // при неудаче возвращаем ошибку(иначе 0), везде даже в инициализации
@@ -17,6 +19,7 @@ cell_t init_cell(void) {
     cell->m_mins_near = 0;
     cell->m_is_min = false;
     cell->m_is_flag = false;
+    cell->m_is_open = false;
     return cell;
     free(cell);
 get_not_memory:
@@ -52,6 +55,17 @@ void up_min_cell(cell_t cell) {
 bool is_min_cell(cell_t cell) {
     if (cell != NULL)
         return (*cell).m_is_min;
+    return false;
+}
+
+void open_cell(cell_t cell) {
+    if (cell != NULL)
+        cell->m_is_open = true;
+}
+
+bool is_open_cell(cell_t cell) {
+    if (cell != NULL)
+        return cell->m_is_open;
     return false;
 }
 

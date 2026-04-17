@@ -1,10 +1,14 @@
 #include "mins_field/mins_field.h"
 #include "row/row.h"
+#include <stdlib.h>
 
 // структура минного поля
 struct mins_field {
     row_t * m_rows;
     size_t m_count_rows;
+    size_t m_count_columns;
+    bool m_is_live : 1;
+    size_t m_free_cell;
 };
 
 // Инициализируем минное поле
@@ -13,19 +17,27 @@ mins_field_t init_mins_field(const size_t count_rows, const size_t count_columns
     size_t index_columns = 0;
     size_t index_mins = 0;
     mins_field_t field = NULL;
-    size_t * array_mins = calloc(sizeof(*array_mins), count_rows);
+    size_t * array_mins = NULL;
+
+
+    if (count_mins > count_rows * count_columns)
+        goto very_most_mins;
+
+    array_mins = calloc(sizeof(*array_mins), count_rows);
     if (array_mins == NULL)
         goto get_not_array_mins;
-    field = calloc(sizeof(*mins_field_t), 1);
+    field = calloc(sizeof(*field), 1);
     if (field == NULL)
         goto get_not_memory;
+    field->m_is_live = true;
+    field->m_free_cell = count_rows * count_columns - count_mins;
     field->m_rows=calloc(sizeof(*field->m_rows), count_rows);
     if (field->m_rows == NULL)
         goto get_not_array;
     field->m_count_rows = count_rows;
-
+    field->m_count_columns = count_columns;
     for(index_mins = 0; index_mins < count_mins;index_mins++)
-        array_mins[rand()%count_mins]++;
+        array_mins[rand()%count_rows] += 1;
 
     for(index_rows = 0; index_rows < count_rows;index_rows++) {
         field->m_rows[index_rows] = init_row(count_columns, array_mins[index_rows]);
@@ -56,11 +68,13 @@ mins_field_t init_mins_field(const size_t count_rows, const size_t count_columns
         destroy_row(field->m_rows[index_rows]);
     }
 get_not_row:
-    free(row->m_cells);
+    free(field->m_rows);
 get_not_array:
-    free(row);
+    free(field);
 get_not_memory:
     free(array_mins);
+get_not_array_mins:
+very_most_mins:
     return NULL;
 }
 
@@ -97,9 +111,58 @@ bool is_flag_cell_mins_field(mins_field_t field, const size_t row, const size_t 
     return false;
 }
 
+size_t get_rows_mins_field(mins_field_t field) {
+    if(field != NULL)
+        return field->m_count_rows;
+    return 0;
+}
+
+size_t get_columns_mins_field(mins_field_t field) {
+    if(field != NULL)
+        return field->m_count_columns;
+    return 0;
+}
+
+bool get_is_live_mins_field(mins_field_t field) {
+    if (field != NULL)
+        return field->m_is_live;
+    return false;
+}
+
+size_t get_free_cell_mins_field(mins_field_t field) {
+    if (field != NULL)
+        return field->m_free_cell;
+    return 0;
+}
+
+bool is_victory_mins_field(mins_field_t field) {
+    if (field != NULL)
+        return field->m_free_cell == 0 && field->m_is_live;
+    return false;
+}
+
+bool open_cell_mins_field(mins_field_t field, const size_t row , const size_t column) {
+    if(field !=NULL && row < field->m_count_rows) {
+        if (is_min_cell_row(field->m_rows[row],column)) {
+            field->m_is_live = true;
+        } else {
+            field->m_free_cell--;
+            open_cell_row(field->m_rows[row],column);
+        }
+        return field->m_is_live;
+    }
+    return false;
+}
+
+bool is_open_cell_mins_field(mins_field_t field, const size_t row , const size_t column) {
+    if(field !=NULL && row < field->m_count_rows)
+        return is_open_cell_row(field->m_rows[row],column);
+    return false;
+}
+
 // Освобождаем ресурсы
 void destroy_mins_field(mins_field_t field) {
-    size_t init_rows = 0;
+    size_t index_rows = 0;
     if (field != NULL) {
         for(index_rows = 0;index_rows<field->m_count_rows;index_rows++)
             destroy_row(field->m_rows[index_rows]);

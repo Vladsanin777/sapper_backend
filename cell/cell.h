@@ -1,3 +1,6 @@
+#ifndef __CELL__CELL__H__
+#define __CELL__CELL__H__
+
 // структура ячейки
 struct cell;
 
@@ -24,11 +27,18 @@ void up_min_cell(cell_t cell);
 // Возвращаем есть ли на данной ячейке бомба
 bool is_min_cell(cell_t cell);
 
+void open_cell(cell_t cell);
+
+bool is_open_cell(cell_t cell);
+
 // Записываем сколько мин вокруг
-void set_min_near_cell(cell_t cell);
+void set_min_near_cell(cell_t cell, unsigned char count_min);
 
 // Получаем сколько мин вокруг
-int get_min_near_cell(cell_t cell);
+unsigned char get_min_near_cell(cell_t cell);
 
 // Освобождаем ресурсы
 void destroy_cell(cell_t cell);
+
+
+#endif
