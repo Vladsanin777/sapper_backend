@@ -71,10 +71,10 @@ int main(void) {
                 break;
             case 2:
                 if (!do_step(field)) {
-                    printf("invalid");
+                    printf("invalid\n");
                     goto end;
                 } else if (is_victory_mins_field(field)) {
-                    printf("You win");
+                    printf("You win\n");
                     goto end;
                 }
                 break;
