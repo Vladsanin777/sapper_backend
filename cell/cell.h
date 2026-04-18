@@ -1,6 +1,5 @@
 #ifndef __CELL__CELL__H__
 #define __CELL__CELL__H__
-
 // структура ячейки
 struct cell;
 
