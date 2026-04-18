@@ -1,5 +1,5 @@
-#include "row/row.h"
-#include "cell/cell.h"
+#include "row.h"
+#include "sapper_backend/src/cell/cell.h"
 #include <stdlib.h>
 #include <stdint.h>
 

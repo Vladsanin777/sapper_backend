@@ -1,5 +1,5 @@
-#include "mins_field/mins_field.h"
-#include "row/row.h"
+#include "mins_field.h"
+#include "sapper_backend/src/row/row.h"
 #include <stdlib.h>
 
 // структура минного поля

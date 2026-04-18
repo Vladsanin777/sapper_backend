@@ -1,4 +1,4 @@
-#include "cell/cell.h"
+#include "cell.h"
 #include <stdlib.h>
 
 // структура ячейки

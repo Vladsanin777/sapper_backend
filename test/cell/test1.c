@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "cell/cell.h"
+#include "sapper_backend/src/cell/cell.h"
 
 int main() {
     cell_t cell = init_cell();
