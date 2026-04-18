@@ -2,6 +2,7 @@
 #define __MINS_FIELD__MINS_FIELD__H__
 
 #include <stddef.h>
+#include <stdbool.h>
 
 // структура минного поля
 struct mins_field;

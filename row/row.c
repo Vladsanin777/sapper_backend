@@ -96,6 +96,7 @@ void down_flag_cell_row(row_t row, const size_t index_cell) {
 bool is_min_cell_row(row_t row, const size_t index_cell) {
     if (row !=NULL && row->m_cells != NULL && index_cell < (*row).m_count_cells)
         return is_min_cell(row->m_cells[index_cell]);
+    return false;
 }
 
 // Стоит ли флаг на ячейке с переданным индексом

@@ -1,6 +1,8 @@
 #ifndef __CELL__CELL__H__
 #define __CELL__CELL__H__
 
+#include <stdbool.h>
+
 // структура ячейки
 struct cell;
 
