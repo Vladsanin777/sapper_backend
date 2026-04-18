@@ -1,6 +1,7 @@
 #include "mins_field.h"
 #include "sapper_backend/src/row/row.h"
 #include <stdlib.h>
+#include <time.h>
 
 // структура минного поля
 struct mins_field {
@@ -36,6 +37,7 @@ mins_field_t init_mins_field(const size_t count_rows, const size_t count_columns
         goto get_not_array;
     field->m_count_rows = count_rows;
     field->m_count_columns = count_columns;
+    srand(time(NULL));
     for(index_mins = 0; index_mins < count_mins;index_mins++)
         array_mins[rand()%count_rows] += 1;
 
