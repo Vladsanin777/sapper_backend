@@ -20,6 +20,11 @@ mins_field_t init_mins_field(const size_t count_rows, const size_t count_columns
     mins_field_t field = NULL;
     size_t * array_mins = NULL;
 
+    if (count_rows < 1)
+        goto null_rows;
+
+    if (count_columns < 1)
+        goto null_columns;
 
     if (count_mins > count_rows * count_columns)
         goto very_most_mins;
@@ -77,6 +82,8 @@ get_not_memory:
     free(array_mins);
 get_not_array_mins:
 very_most_mins:
+null_columns:
+null_rows:
     return NULL;
 }
 

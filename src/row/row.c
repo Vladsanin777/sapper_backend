@@ -22,6 +22,9 @@ void add_mines_row(row_t row, const size_t count_mines);
 row_t init_row(const size_t count_cells, const size_t count_mines) {
     size_t index_cell = 0;
     row_t row = calloc(sizeof(*row),1);
+
+    if (count_cells < 1)
+        goto null_cells;
     if (row == NULL)
         goto get_not_memory;
     row->m_cells = calloc(sizeof(*row->m_cells), count_cells);
@@ -49,6 +52,7 @@ get_not_cell:
 get_not_array:
     free(row);
 get_not_memory:
+null_cells:
     return NULL;
 }
 
