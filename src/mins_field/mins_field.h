@@ -13,6 +13,8 @@ typedef struct mins_field * mins_field_t;
 // Инициализируем минное поле
 mins_field_t init_mins_field(const size_t count_rows, const size_t count_columns, const size_t count_mins);
 
+size_t get_count_mins_mins_field(mins_field_t field);
+
 // Получаем количество мин во круг текушей ячейки
 unsigned char get_count_mins_cell_mins_field(mins_field_t field, const size_t row, const size_t column);
 

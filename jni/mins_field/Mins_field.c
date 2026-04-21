@@ -8,7 +8,12 @@ JNIEXPORT void JNICALL Java_com_example_sapper_MinsField_init
     setPtr(env, obj, (void *)init_mins_field((size_t)rows, (size_t)cols, (size_t)mins));
 }
 
-JNIEXPORT jbyte JNICALL Java_com_example_sapper_MinsField_getCountMins
+JNIEXPORT jlong JNICALL Java_com_example_sapper_MinsField_getCountMins
+        (JNIEnv *env, jobject obj) {
+    return (jlong) get_count_mins_mins_field(getPtr(env, obj));
+}
+
+JNIEXPORT jbyte JNICALL Java_com_example_sapper_MinsField_getCountMinsNear
         (JNIEnv *env, jobject obj, jlong row, jlong col) {
     return (jbyte) get_count_mins_cell_mins_field(getPtr(env, obj), (size_t)row, (size_t)col);
 }

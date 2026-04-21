@@ -8,6 +8,7 @@ struct mins_field {
     row_t * m_rows;
     size_t m_count_rows;
     size_t m_count_columns;
+    size_t m_count_mins;
     bool m_is_live : 1;
     size_t m_free_cell;
 };
@@ -42,6 +43,7 @@ mins_field_t init_mins_field(const size_t count_rows, const size_t count_columns
         goto get_not_array;
     field->m_count_rows = count_rows;
     field->m_count_columns = count_columns;
+    field->m_count_mins = count_mins;
     srand(time(NULL));
     for(index_mins = 0; index_mins < count_mins;index_mins++)
         array_mins[rand()%count_rows] += 1;
@@ -85,6 +87,12 @@ very_most_mins:
 null_columns:
 null_rows:
     return NULL;
+}
+
+size_t get_count_mins_mins_field(mins_field_t field) {
+    if (field != NULL)
+        return field->m_count_mins;
+    return 0;
 }
 
 // Получаем количество мин во круг текушей ячейки
@@ -153,12 +161,12 @@ bool is_victory_mins_field(mins_field_t field) {
 bool open_cell_mins_field(mins_field_t field, const size_t row , const size_t column) {
     if(field !=NULL && row < field->m_count_rows) {
         if (is_min_cell_row(field->m_rows[row],column)) {
-            field->m_is_live = true;
+            field->m_is_live = false;
         } else {
             field->m_free_cell--;
             open_cell_row(field->m_rows[row],column);
         }
-        return field->m_is_live;
+        return !field->m_is_live;
     }
     return false;
 }
