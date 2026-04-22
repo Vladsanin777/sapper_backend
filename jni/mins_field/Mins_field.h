@@ -33,9 +33,6 @@ JNIEXPORT jlong JNICALL Java_com_example_sapper_MinsField_getCountCols
 JNIEXPORT jboolean JNICALL Java_com_example_sapper_MinsField_isLive
         (JNIEnv *env, jobject obj);
 
-JNIEXPORT jlong JNICALL Java_com_example_sapper_MinsField_getCountFree
-        (JNIEnv *env, jobject obj);
-
 JNIEXPORT jboolean JNICALL Java_com_example_sapper_MinsField_isVictory
         (JNIEnv *env, jobject obj);
 

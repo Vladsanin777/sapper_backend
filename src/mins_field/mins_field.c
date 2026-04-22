@@ -10,7 +10,9 @@ struct mins_field {
     size_t m_count_columns;
     size_t m_count_mins;
     bool m_is_live : 1;
-    size_t m_free_cell;
+    size_t m_empty;
+    size_t m_empty_open;
+    size_t m_empty_close;
 };
 
 // Инициализируем минное поле
@@ -37,7 +39,9 @@ mins_field_t init_mins_field(const size_t count_rows, const size_t count_columns
     if (field == NULL)
         goto get_not_memory;
     field->m_is_live = true;
-    field->m_free_cell = count_rows * count_columns - count_mins;
+    field->m_empty = count_rows * count_columns - count_mins;
+    field->m_empty_open = 0;
+    field->m_empty_close = field->m_empty;
     field->m_rows=calloc(sizeof(*field->m_rows), count_rows);
     if (field->m_rows == NULL)
         goto get_not_array;
@@ -146,16 +150,43 @@ bool get_is_live_mins_field(mins_field_t field) {
     return false;
 }
 
-size_t get_free_cell_mins_field(mins_field_t field) {
+bool is_victory_mins_field(mins_field_t field) {
     if (field != NULL)
-        return field->m_free_cell;
+        return field->m_empty_close == 0 && field->m_is_live;
+    return false;
+}
+
+size_t get_count_empty_mins_field(mins_field_t field) {
+    if (field != NULL)
+        return field->m_empty;
     return 0;
 }
 
-bool is_victory_mins_field(mins_field_t field) {
+size_t get_count_empty_open_mins_field(mins_field_t field) {
     if (field != NULL)
-        return field->m_free_cell == 0 && field->m_is_live;
-    return false;
+        return field->m_empty_open;
+    return 0;
+}
+
+size_t get_count_empty_close_mins_field(mins_field_t field) {
+    if (field != NULL)
+        return field->m_empty_close;
+    return 0;
+}
+
+unsigned char get_percent_victory_mins_field(mins_field_t field) {
+    if (field != NULL) {
+        return (get_count_empty_open_mins_field(field) * 100) /
+                (get_count_empty_mins_field(field));
+    }
+    return 0;
+}
+
+static void step_success(mins_field_t field) {
+    if (field != NULL) {
+        field->m_empty_open++;
+        field->m_empty_close--;
+    }
 }
 
 bool open_cell_mins_field(mins_field_t field, const size_t row , const size_t column) {
@@ -163,7 +194,7 @@ bool open_cell_mins_field(mins_field_t field, const size_t row , const size_t co
         if (is_min_cell_row(field->m_rows[row],column)) {
             field->m_is_live = false;
         } else {
-            field->m_free_cell--;
+            step_success(field);
             open_cell_row(field->m_rows[row],column);
         }
         return !field->m_is_live;
