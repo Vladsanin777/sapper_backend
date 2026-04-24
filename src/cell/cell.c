@@ -35,7 +35,7 @@ void up_flag_cell(cell_t cell) {
 // Убираем флаг
 void down_flag_cell(cell_t cell) {
     if (cell != NULL)
-        (*cell).m_is_flag = true;
+        (*cell).m_is_flag = false;
 }
 
 // Возвращаем есть ли флаг
